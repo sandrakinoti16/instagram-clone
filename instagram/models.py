@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from cloudinary.models import CloudinaryField
-
 
 # Create your models here.
 class Profile(models.Model):
@@ -36,8 +34,7 @@ class Profile(models.Model):
         return cls.objects.filter(user__username__icontains=name).all()
 
 class Post(models.Model):
-    # image = models.ImageField(upload_to='posts/')
-    image = CloudinaryField('image')
+    image = models.ImageField(upload_to='posts/')
     name = models.CharField(max_length=250, blank=True)
     caption = models.CharField(max_length=250, blank=True)
     likes = models.ManyToManyField(User, related_name='likes', blank=True, )
